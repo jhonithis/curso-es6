@@ -35,6 +35,15 @@ var List = /*#__PURE__*/function () {
       this.data.push(data);
       console.log(this.data.join(", "));
     }
+  }, {
+    key: "listData",
+    value: function listData() {
+      var textList = '';
+      this.data.map(function (item, index) {
+        textList += index + 1 + " - " + item + "<br />";
+      });
+      document.getElementById('listtodo').innerHTML = textList;
+    }
   }]);
 
   return List;
@@ -55,6 +64,7 @@ var TodoList = /*#__PURE__*/function (_List) {
     document.getElementById('novotodo').onclick = function () {
       var elementInput = document.getElementById('texttodo');
       MinhaLista.add(elementInput.value);
+      MinhaLista.listData();
     };
 
     document.getElementById('texttodo').onclick = function () {

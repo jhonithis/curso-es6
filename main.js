@@ -23,5 +23,4 @@ class TodoList extends List {
         }
     }
 }
-
 var MinhaLista = new TodoList();

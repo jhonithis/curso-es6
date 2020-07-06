@@ -11,7 +11,7 @@ class List {
     listData(){
         let textList = '';
         this.data.map(function(item, index){
-            textList += (index + 1) + " - " + item + "<br />"
+            textList += `${index + 1} - ${item} <br />`
         });
         document.getElementById('listtodo').innerHTML = textList;    
     }

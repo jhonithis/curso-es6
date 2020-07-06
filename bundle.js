@@ -40,7 +40,7 @@ var List = /*#__PURE__*/function () {
     value: function listData() {
       var textList = '';
       this.data.map(function (item, index) {
-        textList += index + 1 + " - " + item + "<br />";
+        textList += "".concat(index + 1, " - ").concat(item, " <br />");
       });
       document.getElementById('listtodo').innerHTML = textList;
     }

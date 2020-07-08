@@ -1,5 +1,9 @@
 "use strict";
 
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
@@ -18,9 +22,31 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+var Usuario = function Usuario(email, senha) {
+  _classCallCheck(this, Usuario);
 
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+  this.email = email;
+  this.senha = senha;
+  this.isAdmin = false;
+};
+
+var Admin = /*#__PURE__*/function (_Usuario) {
+  _inherits(Admin, _Usuario);
+
+  var _super = _createSuper(Admin);
+
+  function Admin(email, senha) {
+    var _this;
+
+    _classCallCheck(this, Admin);
+
+    _this = _super.call(this, email, senha);
+    _this.isAdmin = true;
+    return _this;
+  }
+
+  return Admin;
+}(Usuario);
 
 var List = /*#__PURE__*/function () {
   function List() {
@@ -40,9 +66,9 @@ var List = /*#__PURE__*/function () {
     value: function listData() {
       var textList = '';
       this.data.map(function (item, index) {
-        textList += "".concat(index + 1, " - ").concat(item, " <br />");
+        textList += "".concat(index + 1, " - ").concat(item.email, " - ").concat(item.senha, " - ").concat(item.isAdmin, " <br />");
       });
-      document.getElementById('listtodo').innerHTML = textList;
+      document.getElementById('list').innerHTML = textList;
     }
   }]);
 
@@ -52,27 +78,38 @@ var List = /*#__PURE__*/function () {
 var TodoList = /*#__PURE__*/function (_List) {
   _inherits(TodoList, _List);
 
-  var _super = _createSuper(TodoList);
+  var _super2 = _createSuper(TodoList);
 
   function TodoList() {
-    var _this;
+    var _this2;
 
     _classCallCheck(this, TodoList);
 
-    _this = _super.call(this);
+    _this2 = _super2.call(this);
 
-    document.getElementById('novotodo').onclick = function () {
-      var elementInput = document.getElementById('texttodo');
-      MinhaLista.add(elementInput.value);
+    document.getElementById('novo').onclick = function () {
+      var elementInputIsAdmin = document.getElementById('isAdmin');
+      var email = document.getElementById('email').value;
+      var senha = document.getElementById('senha').value;
+      var usuario;
+
+      if (elementInputIsAdmin.checked) {
+        usuario = new Admin(email, senha);
+      } else {
+        usuario = new Usuario(email, senha);
+      }
+
+      MinhaLista.add(usuario);
       MinhaLista.listData();
     };
 
-    document.getElementById('texttodo').onclick = function () {
-      var elementInput = document.getElementById('texttodo');
+    document.getElementById('email').onclick = function (element) {
+      element.toElement.value = "";
+      var elementInput = document.getElementById('senha');
       elementInput.value = "";
     };
 
-    return _this;
+    return _this2;
   }
 
   return TodoList;
